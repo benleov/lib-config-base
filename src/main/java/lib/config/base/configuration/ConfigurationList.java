@@ -32,6 +32,11 @@ public class ConfigurationList<E extends Configuration> {
 		this.list = Arrays.asList(list);
 	}
 	
+	public void setConfigurations(List<E> list) {
+		this.list = list;
+	}
+	
+	
 	/**
 	 * Returns an array as the current serialization library produces
 	 * neater XML with arrays than lists.

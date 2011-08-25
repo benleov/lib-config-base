@@ -1,7 +1,9 @@
 package lib.config.base.configuration.impl;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import lib.config.base.configuration.Configuration;
 
@@ -30,7 +32,22 @@ public class BasicConfiguration implements Configuration {
 	public String getProperty(String key) {
 		return map.get(key);
 	}
-
+	
+	public Set<String> getKeys() {
+		return Collections.unmodifiableSet(map.keySet());
+	}
+	
+	public String getProperty(String key, String defaultValue) {
+		String value = map.get(key);
+		
+		if(value == null) {
+			return defaultValue;
+		} else {
+			return value;
+		}
+	}
+	
+	
 	public String getId() {
 		return id;
 	}

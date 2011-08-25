@@ -5,11 +5,13 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
-import lib.config.base.configuration.ConfigurationException;
-import lib.config.base.configuration.ConfigurationPersister;
 import lib.config.base.configuration.impl.BasicConfiguration;
+import lib.config.base.configuration.persist.ConfigurationPersister;
+import lib.config.base.configuration.persist.impl.IniPersister;
+import lib.config.base.configuration.persist.impl.SimpleXMLPersister;
 
 import org.junit.After;
 import org.junit.Before;
@@ -31,20 +33,19 @@ public class ConfigurationPersisterTest {
 		//temp.delete();
 	}
 	
-	@Test 
+	@Test (expected=ConfigurationException.class)
 	public void testLoadNonExistantFile() throws ConfigurationException {
 		ConfigurationPersister<BasicConfiguration> persister = 
-				new ConfigurationPersister<BasicConfiguration>();
+				new ConfigurationPersister<BasicConfiguration>(new SimpleXMLPersister<BasicConfiguration>());
 		
 		BasicConfiguration loaded = 
 				persister.load("should_not_exist.xml");
-		
-		
-		fail();
+
+		fail("Exception should have already been thrown.");
 	}
 	
 	@Test
-	public void testLoadAndSave() throws ConfigurationException {
+	public void testLoadAndSave() throws ConfigurationException, IOException {
 		
 		BasicConfiguration config = new BasicConfiguration();
 		
@@ -52,7 +53,7 @@ public class ConfigurationPersisterTest {
 		config.setProperty("some_key", "some_value");
 		
 		ConfigurationPersister<BasicConfiguration> persister = 
-				new ConfigurationPersister<BasicConfiguration>();
+				new ConfigurationPersister<BasicConfiguration>(new SimpleXMLPersister<BasicConfiguration>());
 		
 		persister.save(temp.getAbsolutePath(), config);
 		
@@ -66,7 +67,7 @@ public class ConfigurationPersisterTest {
 	}
 	
 	@Test
-	public void testSaveMultipleConfigs() throws ConfigurationException {
+	public void testSaveMultipleConfigs() throws ConfigurationException, IOException {
 		
 		BasicConfiguration config = new BasicConfiguration();
 		config.setId("test_config_one");
@@ -77,7 +78,7 @@ public class ConfigurationPersisterTest {
 		config2.setProperty("some_key_two", "some_value_two");
 		
 		ConfigurationPersister<BasicConfiguration> 
-		persister = new ConfigurationPersister<BasicConfiguration>();
+		persister = new ConfigurationPersister<BasicConfiguration>(new SimpleXMLPersister<BasicConfiguration>());
 		
 		persister.save(temp.getAbsolutePath(), config, config2);	
 		
@@ -85,9 +86,49 @@ public class ConfigurationPersisterTest {
 		
 		assertNotNull(all);
 		assertEquals(2, all.size());
-		
-		
-		
 	}
 
+	@Test
+	public void testLoadAndSaveCustomConfiguration() 
+				throws ConfigurationException, IOException {
+		
+		TestConfiguration config = new TestConfiguration();
+		
+		config.setId("test_config");
+		config.setProperty("some_key", "some_value");
+		
+		ConfigurationPersister<TestConfiguration> persister = 
+				new ConfigurationPersister<TestConfiguration>(
+						new SimpleXMLPersister<TestConfiguration>());
+				
+		persister.save(temp.getAbsolutePath(), config);
+		
+		TestConfiguration loaded = 
+				persister.load(temp.getAbsolutePath());
+		
+		assertNotNull(loaded);
+		
+		assertEquals(config.getId(), loaded.getId());
+		assertEquals(config.getProperty("some_key"), loaded.getProperty("some_key"));
+	}
+
+	@Test
+	public void testLoadAndSaveIniPersister() throws ConfigurationException, IOException {
+		
+		BasicConfiguration config = new BasicConfiguration();
+		
+		config.setId("test_config");
+		config.setProperty("some_key", "some_value");
+		
+		ConfigurationPersister<BasicConfiguration> 
+		persister = new ConfigurationPersister<BasicConfiguration>(new IniPersister<BasicConfiguration>());
+		persister.save(temp.getAbsolutePath(), config);
+		
+		BasicConfiguration loaded = persister.load(temp.getAbsolutePath());
+		
+		assertNotNull(loaded);
+		assertEquals(config.getId(), loaded.getId());
+		assertEquals(config.getProperty("some_key"), loaded.getProperty("some_key"));
+	}
+	
 }
