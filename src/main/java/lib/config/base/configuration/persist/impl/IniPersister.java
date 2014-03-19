@@ -21,7 +21,7 @@ import org.ini4j.Wini;
  * Chose to go with this over apache commons as it is much lighter and does not have dependencies on
  * apaches logging system.
  * 
- * @author BT7662
+ * @author Benjamin Leov
  *
  * @param <E>
  */

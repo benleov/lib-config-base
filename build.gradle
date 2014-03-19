@@ -24,18 +24,18 @@ dependencies {
 Creates a fat jar (see link below for more details)
 http://docs.codehaus.org/display/GRADLE/Cookbook#Cookbook-Creatingafatjar
 */
+
 /*
 jar {
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
 }
 */
 
-/*
+/**
 Copys all deps to a single directory
 */
-
-task copyToLib(dependsOn: configurations.default.buildArtifacts, type: Copy) {
+task copyToLib(type: Copy) {
     into "$buildDir/output/lib"
     from configurations.default
-    from configurations.default.allArtifactFiles
+    from configurations.default.allArtifacts.files
 }

@@ -10,7 +10,7 @@ import org.simpleframework.xml.Root;
  * Holds a list of configurations, so that multiple sets of key/value pairs can be
  * stored.
  * 
- * @author BT7662
+ * @author Benjamin Leov
  *
  * @param <E>
  */

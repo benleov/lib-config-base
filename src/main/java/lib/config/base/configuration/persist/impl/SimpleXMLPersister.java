@@ -2,17 +2,17 @@ package lib.config.base.configuration.persist.impl;
 
 import java.io.File;
 
-import org.simpleframework.xml.core.Persister;
-
 import lib.config.base.configuration.Configuration;
 import lib.config.base.configuration.ConfigurationException;
 import lib.config.base.configuration.ConfigurationList;
 import lib.config.base.configuration.persist.AbstractPersister;
 
+import org.simpleframework.xml.core.Persister;
+
 /**
  * The simple xml persister can persist any object with the correct annotations.
  * 
- * @author BT7662
+ * @author Benjamin Leov
  *
  * @param <E>
  */
