@@ -10,7 +10,7 @@ import java.util.Set;
 import lib.config.base.configuration.Configuration;
 import lib.config.base.configuration.ConfigurationException;
 import lib.config.base.configuration.ConfigurationList;
-import lib.config.base.configuration.impl.BasicConfiguration;
+import lib.config.base.configuration.factory.ConfigurationFactory;
 import lib.config.base.configuration.persist.AbstractPersister;
 
 import org.ini4j.InvalidFileFormatException;
@@ -18,8 +18,8 @@ import org.ini4j.Profile.Section;
 import org.ini4j.Wini;
 
 /**
- * Chose to go with this over apache commons as it is much lighter and does not have dependencies on
- * apaches logging system.
+ * Chose to go with this over Apache Commons as it is much lighter and does not
+ * have dependencies on Apache's logging system.
  * 
  * @author Benjamin Leov
  *
@@ -28,23 +28,29 @@ import org.ini4j.Wini;
 public class IniPersister<E extends Configuration> implements
 		AbstractPersister<E> {
 
+	private ConfigurationFactory<E> factory;
+	
+	public IniPersister(ConfigurationFactory<E> factory) {
+		this.factory = factory;
+	}
+	
 	@Override
 	public void write(ConfigurationList<E> configuration, File file)
 			throws ConfigurationException {
-		
+
 		Wini ini = new Wini();
 
 		List<E> configs = configuration.getConfigurations();
 
-		for(E curr : configs) {
+		for (E curr : configs) {
 			String id = curr.getId(); // section id
-			
+
 			Section section = ini.add(id);
-			for(String key : curr.getKeys()) {
+			for (String key : curr.getKeys()) {
 				section.add(key, curr.getProperty(key));
 			}
 		}
-		
+
 		try {
 			ini.store(file);
 		} catch (IOException e) {
@@ -62,10 +68,10 @@ public class IniPersister<E extends Configuration> implements
 			List<E> configs = new ArrayList<E>();
 
 			for (Entry<String, Section> entry : sections) {
-				
+
 				String id = entry.getKey();
 
-				E newConfig = (E) new BasicConfiguration();
+				E newConfig = factory.buildConfiguration(entry.getKey());
 				newConfig.setId(id);
 
 				Section section = entry.getValue();
@@ -74,7 +80,7 @@ public class IniPersister<E extends Configuration> implements
 					String value = section.get(key);
 					newConfig.setProperty(key, value);
 				}
-				
+
 				configs.add(newConfig);
 			}
 
