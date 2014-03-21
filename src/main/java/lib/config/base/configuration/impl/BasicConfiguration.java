@@ -78,4 +78,9 @@ public class BasicConfiguration implements Configuration {
 		return builder.toString();
 	}
 
+	@Override
+	public boolean hasProperty(String key) {
+		return map.containsKey(key);
+	}
+
 }

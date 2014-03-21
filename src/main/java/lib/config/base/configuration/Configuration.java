@@ -26,6 +26,14 @@ public interface Configuration {
 	 */
 	boolean removeProperty(String key);
 
+	/**
+	 * Returns true if this configuration has the specified property.
+	 * 
+	 * @param key
+	 * @return
+	 */
+	boolean hasProperty(String key);
+
 	void setProperty(String key, String value);
 
 	Set<String> getKeys();
