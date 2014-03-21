@@ -1,5 +1,6 @@
 package lib.config.base.configuration;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.LinkedHashSet;
 
@@ -12,8 +13,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class INIPersisterTest {
+	final String FILE_NAME = "unit_test_file";
+	
 	@Before
 	public void setUp() throws Exception {
+		File temp = new File(FILE_NAME);
+		temp.delete();
 	}
 
 	@After
@@ -23,7 +28,9 @@ public class INIPersisterTest {
 	@Test
 	public void testLoadAndSaveIniPersister() throws ConfigurationException,
 			IOException {
-
+		
+		File temp = new File(FILE_NAME);
+		
 		IniPersister<BasicConfiguration> persister = new IniPersister<BasicConfiguration>(
 				new ConfigurationFactory<BasicConfiguration>() {
 
@@ -31,7 +38,7 @@ public class INIPersisterTest {
 					public BasicConfiguration buildConfiguration(String name) {
 						return new BasicConfiguration();
 					}
-				});
+				}, temp);
 
 		PersisterTestUtil.testPersister(persister);
 	}

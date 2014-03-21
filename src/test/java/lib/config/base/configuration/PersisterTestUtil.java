@@ -12,14 +12,10 @@ import lib.config.base.configuration.persist.AbstractPersister;
 
 public class PersisterTestUtil {
 
-	public static void testPersister(AbstractPersister<BasicConfiguration> persister)
+	public static void testPersister(
+			AbstractPersister<BasicConfiguration> persister)
 			throws ConfigurationException, IOException {
 
-		final String FILE_NAME = "unit_test_file";
-		File temp = new File(FILE_NAME);
-		temp.delete();
-		
-		try {
 		BasicConfiguration savedConfig = new BasicConfiguration();
 
 		savedConfig.setId("test_config");
@@ -27,23 +23,20 @@ public class PersisterTestUtil {
 
 		ConfigurationList<BasicConfiguration> savedList = new ConfigurationList<BasicConfiguration>();
 		savedList.setConfigurations(savedConfig);
-		
-		persister.write(savedList, temp);
 
-		ConfigurationList<BasicConfiguration> loadedList = persister.read(temp);
+		persister.write(savedList);
+
+		ConfigurationList<BasicConfiguration> loadedList = persister.read();
 
 		assertNotNull(loadedList);
 
 		assertTrue(loadedList.size() == savedList.size());
-		
+
 		BasicConfiguration loadedConfig = loadedList.getConfigurations().get(0);
-		
+
 		assertEquals(savedConfig.getId(), loadedConfig.getId());
 		assertEquals(savedConfig.getProperty("some_key"),
 				loadedConfig.getProperty("some_key"));
-		
-		} finally {
-			temp.delete();
-		}
+
 	}
 }

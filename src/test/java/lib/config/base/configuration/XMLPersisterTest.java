@@ -35,7 +35,7 @@ public class XMLPersisterTest {
 	public void testLoadNonExistantFile() throws ConfigurationException {
 		
 		ConfigurationPersister<BasicConfiguration> persister = new ConfigurationPersister<BasicConfiguration>(
-				new SimpleXMLPersister<BasicConfiguration>());
+				new SimpleXMLPersister<BasicConfiguration>(temp));
 
 		BasicConfiguration loaded = persister.load("should_not_exist.xml");
 
@@ -51,7 +51,7 @@ public class XMLPersisterTest {
 		config.setProperty("some_key", "some_value");
 
 		ConfigurationPersister<BasicConfiguration> persister = new ConfigurationPersister<BasicConfiguration>(
-				new SimpleXMLPersister<BasicConfiguration>());
+				new SimpleXMLPersister<BasicConfiguration>(temp));
 
 		persister.save(temp.getAbsolutePath(), config);
 
@@ -77,7 +77,7 @@ public class XMLPersisterTest {
 		config2.setProperty("some_key_two", "some_value_two");
 
 		ConfigurationPersister<BasicConfiguration> persister = new ConfigurationPersister<BasicConfiguration>(
-				new SimpleXMLPersister<BasicConfiguration>());
+				new SimpleXMLPersister<BasicConfiguration>(temp));
 
 		persister.save(temp.getAbsolutePath(), config, config2);
 
@@ -98,7 +98,7 @@ public class XMLPersisterTest {
 		config.setProperty("some_key", "some_value");
 
 		ConfigurationPersister<TestConfiguration> persister = new ConfigurationPersister<TestConfiguration>(
-				new SimpleXMLPersister<TestConfiguration>());
+				new SimpleXMLPersister<TestConfiguration>(temp));
 
 		persister.save(temp.getAbsolutePath(), config);
 

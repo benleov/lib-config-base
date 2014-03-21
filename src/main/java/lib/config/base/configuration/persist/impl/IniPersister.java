@@ -29,13 +29,15 @@ public class IniPersister<E extends Configuration> implements
 		AbstractPersister<E> {
 
 	private ConfigurationFactory<E> factory;
+	private File file;
 	
-	public IniPersister(ConfigurationFactory<E> factory) {
+	public IniPersister(ConfigurationFactory<E> factory, File file) {
 		this.factory = factory;
+		this.file = file;
 	}
 	
 	@Override
-	public void write(ConfigurationList<E> configuration, File file)
+	public void write(ConfigurationList<E> configuration)
 			throws ConfigurationException {
 
 		Wini ini = new Wini();
@@ -59,10 +61,10 @@ public class IniPersister<E extends Configuration> implements
 	}
 
 	@Override
-	public ConfigurationList<E> read(File toLoad) throws ConfigurationException {
+	public ConfigurationList<E> read() throws ConfigurationException {
 
 		try {
-			Wini ini = new Wini(toLoad);
+			Wini ini = new Wini(file);
 			Set<Entry<String, Section>> sections = ini.entrySet();
 
 			List<E> configs = new ArrayList<E>();

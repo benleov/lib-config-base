@@ -18,12 +18,14 @@ import org.simpleframework.xml.core.Persister;
  */
 public class SimpleXMLPersister<E extends Configuration> implements AbstractPersister<E> {
 
-	public SimpleXMLPersister() {
-
+	private File file;
+	
+	public SimpleXMLPersister(File file) {
+		this.file = file;
 	}
 
 	@Override
-	public void write(ConfigurationList<E> configuration, File file)
+	public void write(ConfigurationList<E> configuration)
 			throws ConfigurationException {
 		Persister persister = new Persister();
 		try {
@@ -34,11 +36,11 @@ public class SimpleXMLPersister<E extends Configuration> implements AbstractPers
 	}
 
 	@Override
-	public ConfigurationList<E> read(File toLoad)throws ConfigurationException {
+	public ConfigurationList<E> read()throws ConfigurationException {
 
 		Persister persister = new Persister();
 		try {
-			return persister.read(ConfigurationList.class, toLoad);
+			return persister.read(ConfigurationList.class, file);
 		} catch (Exception e) {
 			throw new ConfigurationException(e);
 		}

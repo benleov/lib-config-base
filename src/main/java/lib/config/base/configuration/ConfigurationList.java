@@ -1,6 +1,7 @@
 package lib.config.base.configuration;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import org.simpleframework.xml.ElementList;
@@ -15,7 +16,7 @@ import org.simpleframework.xml.Root;
  * @param <E>
  */
 @Root
-public class ConfigurationList<E extends Configuration> {
+public class ConfigurationList<E extends Configuration> implements Iterable<E> {
 
 	@ElementList(entry = "configurations", inline = true)
 	private List<E> list;
@@ -36,6 +37,10 @@ public class ConfigurationList<E extends Configuration> {
 		this.list = list;
 	}
 
+	public void add(E e) {
+		list.add(e);
+	}
+	
 	/**
 	 * Returns an array as the current serialization library produces neater XML
 	 * with arrays than lists. *
@@ -52,5 +57,10 @@ public class ConfigurationList<E extends Configuration> {
 		} else {
 			return 0;
 		}
+	}
+
+	@Override
+	public Iterator<E> iterator() {
+		return list.iterator();
 	}
 }
