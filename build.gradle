@@ -10,7 +10,8 @@ dependencies {
 		compile([group: 'org.slf4j', name: 'slf4j-api', version: '1.6.1'],
 			[group:'ch.qos.logback', name: 'logback-core', version: '0.9.29'],
 			[group:'org.simpleframework', name: 'simple-xml', version: '2.6'],
-		    [group:'org.ini4j', name: 'ini4j', version: '0.5.2'])
+		    	[group:'org.ini4j', name: 'ini4j', version: '0.5.2'],
+			[group:'org.mongodb', name: 'mongo-java-driver', version: '2.+'])
 		
 
 		testCompile group: 'junit', name: 'junit', version: '4.+'
