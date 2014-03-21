@@ -1,5 +1,6 @@
 package lib.config.base.configuration;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -22,7 +23,7 @@ public class ConfigurationList<E extends Configuration> implements Iterable<E> {
 	private List<E> list;
 
 	public ConfigurationList() {
-
+		list = new ArrayList<E>();
 	}
 
 	public ConfigurationList(E... list) {
@@ -40,7 +41,7 @@ public class ConfigurationList<E extends Configuration> implements Iterable<E> {
 	public void add(E e) {
 		list.add(e);
 	}
-	
+
 	/**
 	 * Returns an array as the current serialization library produces neater XML
 	 * with arrays than lists. *
@@ -52,11 +53,7 @@ public class ConfigurationList<E extends Configuration> implements Iterable<E> {
 	}
 
 	public int size() {
-		if (list != null) {
-			return list.size();
-		} else {
-			return 0;
-		}
+		return list.size();
 	}
 
 	@Override

@@ -22,6 +22,8 @@ import com.mongodb.MongoClient;
 public class MongoDBPersister<E extends Configuration> implements
 		AbstractPersister<E> {
 
+	public static final String MONGO_COLLECTION_NAME = "configuration";
+	
 	private ConfigurationFactory<E> factory;
 
 	private String host, dbName;
@@ -29,20 +31,21 @@ public class MongoDBPersister<E extends Configuration> implements
 
 	public MongoDBPersister(ConfigurationFactory<E> factory, String host,
 			int port, String dbName) {
+		this.factory = factory;
 		this.host = host;
 		this.port = port;
 		this.dbName = dbName;
-		this.factory = factory;
 	}
 
 	@Override
 	public void write(ConfigurationList<E> list) throws ConfigurationException {
 
 		MongoClient mongoClient = null;
+		
 		try {
 			mongoClient = new MongoClient(host, port);
 			DB db = mongoClient.getDB(dbName);
-			DBCollection coll = db.getCollection("configuration");
+			DBCollection coll = db.getCollection(MONGO_COLLECTION_NAME);
 
 			for (Configuration conf : list) {
 
@@ -51,10 +54,10 @@ public class MongoDBPersister<E extends Configuration> implements
 				for (String key : conf.getKeys()) {
 					doc.append(key, conf.getProperty(key));
 				}
-
-				coll.insert(doc);
-
+				
+				System.out.println(coll.insert(doc).toString());
 			}
+			
 
 		} catch (UnknownHostException e) {
 			throw new ConfigurationException(e);
