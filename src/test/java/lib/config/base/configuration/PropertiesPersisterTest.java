@@ -2,19 +2,18 @@ package lib.config.base.configuration;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.LinkedHashSet;
 
 import lib.config.base.configuration.factory.ConfigurationFactory;
 import lib.config.base.configuration.impl.BasicConfiguration;
-import lib.config.base.configuration.persist.impl.IniPersister;
+import lib.config.base.configuration.persist.impl.PropertiesPersister;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class INIPersisterTest {
+public class PropertiesPersisterTest {
 	final String FILE_NAME = "unit_test_file";
-	
+
 	@Before
 	public void setUp() throws Exception {
 		File temp = new File(FILE_NAME);
@@ -28,10 +27,10 @@ public class INIPersisterTest {
 	@Test
 	public void testLoadAndSaveIniPersister() throws ConfigurationException,
 			IOException {
-		
+
 		File temp = new File(FILE_NAME);
-		
-		IniPersister<BasicConfiguration> persister = new IniPersister<BasicConfiguration>(
+
+		PropertiesPersister<BasicConfiguration> persister = new PropertiesPersister<BasicConfiguration>(
 				new ConfigurationFactory<BasicConfiguration>() {
 
 					@Override

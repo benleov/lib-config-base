@@ -38,9 +38,9 @@ public class MongoDBPersisterTest {
 				new ConfigurationFactory<BasicConfiguration>() {
 
 					@Override
-					public BasicConfiguration buildConfiguration(String name) {
+					public BasicConfiguration buildConfiguration(String id) {
 						BasicConfiguration bc = new BasicConfiguration();
-						bc.setId(name);
+						bc.setId(id);
 						return bc;
 					}
 

@@ -24,6 +24,11 @@ public class BasicConfiguration implements Configuration {
 		map = new HashMap<String, String>();
 	}
 
+	public BasicConfiguration(String id) {
+		this();
+		setId(id);
+	}
+
 	public void setProperty(String key, String value) {
 		map.put(key, value);
 	}
