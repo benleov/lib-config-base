@@ -8,17 +8,15 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import lib.config.base.configuration.factory.ConfigurationFactory;
 import lib.config.base.configuration.impl.BasicConfiguration;
 import lib.config.base.configuration.persist.ConfigurationPersister;
-import lib.config.base.configuration.persist.impl.IniPersister;
 import lib.config.base.configuration.persist.impl.SimpleXMLPersister;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ConfigurationPersisterTest {
+public class XMLPersisterTest {
 
 	private final String FILE_NAME = "unit_test_config.xml";
 	private File temp = new File(FILE_NAME);
@@ -35,6 +33,7 @@ public class ConfigurationPersisterTest {
 
 	@Test(expected = ConfigurationException.class)
 	public void testLoadNonExistantFile() throws ConfigurationException {
+		
 		ConfigurationPersister<BasicConfiguration> persister = new ConfigurationPersister<BasicConfiguration>(
 				new SimpleXMLPersister<BasicConfiguration>());
 
@@ -111,37 +110,4 @@ public class ConfigurationPersisterTest {
 		assertEquals(config.getProperty("some_key"),
 				loaded.getProperty("some_key"));
 	}
-
-	@Test
-	public void testLoadAndSaveIniPersister() throws ConfigurationException,
-			IOException {
-		fail();
-// FIXME this is outdated!
-//		BasicConfiguration config = new BasicConfiguration();
-//
-//		config.setId("test_config");
-//		config.setProperty("some_key", "some_value");
-//
-//		IniPersister<BasicConfiguration> persister = new IniPersister<BasicConfiguration>(
-//				new ConfigurationFactory<BasicConfiguration>() {
-//
-//					@Override
-//					public BasicConfiguration buildConfiguration(String name) {
-//						BasicConfiguration config = new BasicConfiguration();
-//						config.setId(name);
-//						return config;
-//					}
-//				});
-//
-//		
-//		persister.write(temp.getAbsolutePath(), config);
-//
-//		ConfigurationList loaded = persister.read(temp);
-//
-//		assertNotNull(loaded);
-//		assertEquals(config.getId(), loaded.getId());
-//		assertEquals(config.getProperty("some_key"),
-//				loaded.getProperty("some_key"));
-	}
-
 }
