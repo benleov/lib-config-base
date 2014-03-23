@@ -27,7 +27,7 @@ See the gradle.build file for the required versions.
 Usage
 --------------------------------------
 
-'''java
+```java
 		final String FILE_NAME = "my_settings.ini";
 		
 		File temp = new File(FILE_NAME);
@@ -56,4 +56,4 @@ Usage
 		// load the saved settings back
 		ConfigurationList<BasicConfiguration> loadedList = persister.read();
 		BasicConfiguration loadedConfig = loadedList.getConfigurations().get(0);
-'''
+```
