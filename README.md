@@ -1,28 +1,32 @@
 lib_config_base
 ==================================================
 
-lib_config_base provides an object orientated abstraction to software configuration, to allow plugins to provide access, without being concerned about the underlying format. 
+lib_config_base provides an abstraction to software configuration, allowing Java applications to access settings without being concerned with the underlying file format. See [lib_config_web](https://github.com/benleov/lib_config_web) for an example that provides a CRUD Web interface. See below for an example that uses the code directly, or check out the JUnit tests.
+
+Current supported formats are:
+
+* Windows INI
+* XML
+* Mongo DB
 
 Dependences:
 --------------------------------------
 
-Use the gradle task "copyToLib" to download all dependences.
-
 Compile:
 
-* [SLF4J](www.slf4j.org/‎) 
+* [SLF4J](http://www.slf4j.org/‎) 
 * [Simple-XML](http://simple.sourceforge.net/) 
 * [Logback](http://logback.qos.ch/)
-* [Ini4j](ini4j.sourceforge.net)
-* [Stax API] (http://stax.codehaus.org/)
-* [XPP3] (http://www.xmlpull.org/)
-* [Mongo DB] (https://github.com/mongodb/mongo-java-driver)
+* [Ini4j](http://ini4j.sourceforge.net)
+* [Stax API](http://stax.codehaus.org/)
+* [XPP3](http://www.xmlpull.org/)
+* [Mongo DB](https://github.com/mongodb/mongo-java-driver)
 
 Testing:
 
 * [JUnit](http://junit.org/)
 
-See the gradle.build file for the required versions.
+Use the gradle task "copyToLib" to download all dependences, and see the gradle.build file for the required versions.
 
 Usage
 --------------------------------------
