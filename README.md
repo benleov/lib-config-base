@@ -1,7 +1,7 @@
 lib_config_base
 ==================================================
 
-lib_config_base provides an abstraction to software configuration, allowing Java applications to access settings without being concerned with the underlying file format. See [lib_config_web](https://github.com/benleov/lib_config_web) for an example that provides a CRUD Web interface. See below for an example that uses the code directly, or check out the JUnit tests.
+lib_config_base provides an abstraction to software configuration, allowing Java applications to access settings without being concerned with the underlying file format. See [lib_config_web](https://github.com/benleov/lib_config_web) for an example that provides a [CRUD](http://en.wikipedia.org/wiki/Create,_read,_update_and_delete) Web interface. See below for an example that uses the code directly, or check out the JUnit tests.
 
 Current supported formats are:
 
