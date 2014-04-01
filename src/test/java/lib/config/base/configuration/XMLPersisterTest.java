@@ -1,15 +1,12 @@
 package lib.config.base.configuration;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 import lib.config.base.configuration.impl.BasicConfiguration;
-import lib.config.base.configuration.persist.ConfigurationPersister;
+import lib.config.base.configuration.persist.AbstractPersister;
 import lib.config.base.configuration.persist.impl.SimpleXMLPersister;
 
 import org.junit.After;
@@ -33,81 +30,42 @@ public class XMLPersisterTest {
 
 	@Test(expected = ConfigurationException.class)
 	public void testLoadNonExistantFile() throws ConfigurationException {
+		File file = new File("should_not_exist");
+		file.delete();
 		
-		ConfigurationPersister<BasicConfiguration> persister = new ConfigurationPersister<BasicConfiguration>(
-				new SimpleXMLPersister<BasicConfiguration>(temp));
+		AbstractPersister<BasicConfiguration> persister = new SimpleXMLPersister<BasicConfiguration>(
+				file);
 
-		BasicConfiguration loaded = persister.load("should_not_exist.xml");
-
-		fail("Exception should have already been thrown.");
+		PersisterTestUtil.testReadWithoutWritePersister(persister);
 	}
 
 	@Test
-	public void testLoadAndSave() throws ConfigurationException, IOException {
+	public void testLoadAndSave() throws ConfigurationException {
 
-		BasicConfiguration config = new BasicConfiguration();
+		AbstractPersister<BasicConfiguration> persister = new SimpleXMLPersister<BasicConfiguration>(
+				temp);
 
-		config.setId("test_config");
-		config.setProperty("some_key", "some_value");
-
-		ConfigurationPersister<BasicConfiguration> persister = new ConfigurationPersister<BasicConfiguration>(
-				new SimpleXMLPersister<BasicConfiguration>(temp));
-
-		persister.save(temp.getAbsolutePath(), config);
-
-		BasicConfiguration loaded = persister.load(temp.getAbsolutePath());
-
-		assertNotNull(loaded);
-
-		assertEquals(config.getId(), loaded.getId());
-		assertEquals(config.getProperty("some_key"),
-				loaded.getProperty("some_key"));
+		PersisterTestUtil.testPersister(persister);
 	}
 
 	@Test
 	public void testSaveMultipleConfigs() throws ConfigurationException,
 			IOException {
 
-		BasicConfiguration config = new BasicConfiguration();
-		config.setId("test_config_one");
-		config.setProperty("some_key_one", "some_value_one");
+		AbstractPersister<BasicConfiguration> persister = new SimpleXMLPersister<BasicConfiguration>(
+				temp);
 
-		BasicConfiguration config2 = new BasicConfiguration();
-		config2.setId("test_config_two");
-		config2.setProperty("some_key_two", "some_value_two");
-
-		ConfigurationPersister<BasicConfiguration> persister = new ConfigurationPersister<BasicConfiguration>(
-				new SimpleXMLPersister<BasicConfiguration>(temp));
-
-		persister.save(temp.getAbsolutePath(), config, config2);
-
-		List<BasicConfiguration> all = persister
-				.loadAll(temp.getAbsolutePath());
-
-		assertNotNull(all);
-		assertEquals(2, all.size());
+		PersisterTestUtil.testPersisterMultipleConfigs(persister);
 	}
 
 	@Test
 	public void testLoadAndSaveCustomConfiguration()
-			throws ConfigurationException, IOException {
+			throws ConfigurationException {
 
-		TestConfiguration config = new TestConfiguration();
 
-		config.setId("test_config");
-		config.setProperty("some_key", "some_value");
+		AbstractPersister<CustomConfiguration> persister = new SimpleXMLPersister<CustomConfiguration>(
+				temp);
 
-		ConfigurationPersister<TestConfiguration> persister = new ConfigurationPersister<TestConfiguration>(
-				new SimpleXMLPersister<TestConfiguration>(temp));
-
-		persister.save(temp.getAbsolutePath(), config);
-
-		TestConfiguration loaded = persister.load(temp.getAbsolutePath());
-
-		assertNotNull(loaded);
-
-		assertEquals(config.getId(), loaded.getId());
-		assertEquals(config.getProperty("some_key"),
-				loaded.getProperty("some_key"));
+		PersisterTestUtil.testCustomConfig(persister);
 	}
 }
