@@ -3,7 +3,7 @@ package lib.config.base.configuration;
 public class ConfigurationException extends Exception {
 
 	/**
-	 * 
+	 * @author Benjamin Leov
 	 */
 	private static final long serialVersionUID = 1L;
 

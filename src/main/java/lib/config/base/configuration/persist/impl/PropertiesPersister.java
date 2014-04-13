@@ -13,6 +13,14 @@ import lib.config.base.configuration.ConfigurationList;
 import lib.config.base.configuration.factory.ConfigurationFactory;
 import lib.config.base.configuration.persist.AbstractPersister;
 
+/**
+ * 
+ * Standard Java Properties persister.
+ * 
+ * @author Benjamin Leov
+ *
+ * @param <E>
+ */
 public class PropertiesPersister<E extends Configuration> implements
 		AbstractPersister<E> {
 

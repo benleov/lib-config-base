@@ -7,6 +7,12 @@ import java.lang.reflect.TypeVariable;
 import lib.config.base.configuration.Configuration;
 import lib.config.base.configuration.factory.ConfigurationFactory;
 
+/**
+ * 
+ * @author Benjamin Leov
+ *
+ * @param <E>
+ */
 public class ReflectionConfigurationFactory<E extends Configuration> implements ConfigurationFactory<E> {
 
 	public E buildConfiguration(String name) {

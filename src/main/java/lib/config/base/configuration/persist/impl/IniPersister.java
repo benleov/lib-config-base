@@ -18,8 +18,7 @@ import org.ini4j.Profile.Section;
 import org.ini4j.Wini;
 
 /**
- * Chose to go with this over Apache Commons as it is much lighter and does not
- * have dependencies on Apache's logging system.
+ * INI file based persister. 
  * 
  * @author Benjamin Leov
  *

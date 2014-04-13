@@ -19,6 +19,13 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 
+/**
+ * MongoDB based configuration persister.
+ * 
+ * @author Benjamin Leov
+ *
+ * @param <E>
+ */
 public class MongoDBPersister<E extends Configuration> implements
 		AbstractPersister<E> {
 

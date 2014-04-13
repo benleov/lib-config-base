@@ -10,7 +10,7 @@ import lib.config.base.configuration.persist.AbstractPersister;
 import org.simpleframework.xml.core.Persister;
 
 /**
- * The simple xml persister can persist any object with the correct annotations.
+ * Simple XML persister.
  * 
  * @author Benjamin Leov
  *
